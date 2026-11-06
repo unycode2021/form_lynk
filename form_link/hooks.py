@@ -4,6 +4,8 @@ app_publisher = "Unycode Limited"
 app_description = "Visa Application Assistance App"
 app_email = "automate@unycode.net"
 app_license = "mit"
+app_logo = "/assets/form_link/images/logo.png"
+app_logo_url = "/assets/form_link/images/logo.png"
 # required_apps = []
 
 # Includes in <head>
@@ -24,9 +26,21 @@ app_license = "mit"
 # webform_include_js = {"doctype": "public/js/doctype.js"}
 # webform_include_css = {"doctype": "public/css/doctype.css"}
 
+website_route_rules = [
+    {"from_route": "/<path:app_path>", "to_route": "home"},
+]
+
 # include js in page
 # page_js = {"page" : "public/js/file.js"}
-
+add_to_apps_screen = [
+    {
+        "name": "form_lynk",
+        "logo": "/assets/form_link/images/logo.png",
+        "title": "Form Lynk",
+        "route": "/home",
+       #  "has_permission": "form_link.permissions.check_app_permission",
+    }
+]
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
@@ -122,6 +136,13 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
+doc_events = {
+    "User": {
+        "after_insert": "form_link.api.auth.add_fl_user",
+        "on_update": "form_link.api.auth.add_fl_user",
+        "on_trash": "form_link.api.auth.remove_fl_user",
+    },
+}
 # doc_events = {
 # 	"*": {
 # 		"on_update": "method",
@@ -219,6 +240,7 @@ app_license = "mit"
 # auth_hooks = [
 # 	"form_link.auth.validate"
 # ]
+export_python_type_annotations = True
 
 # Automatically update python controller files with type annotations for this app.
 # export_python_type_annotations = True
@@ -226,4 +248,3 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
